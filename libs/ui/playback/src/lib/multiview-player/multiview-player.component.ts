@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
     type RecordingStartMetadata,
     type RecordingStoppedEvent,
@@ -39,7 +40,12 @@ interface MultiviewSlot {
     selector: 'app-multiview-player',
     templateUrl: './multiview-player.component.html',
     styleUrl: './multiview-player.component.scss',
-    imports: [MatIconModule, MatTooltipModule, WebPlayerViewComponent],
+    imports: [
+        MatIconModule,
+        MatTooltipModule,
+        TranslatePipe,
+        WebPlayerViewComponent,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'multiview-player' },
 })
@@ -56,8 +62,11 @@ export class MultiviewPlayerComponent {
     readonly recordingStopped = output<RecordingStoppedEvent>();
     private readonly settingsStore = inject(SettingsStore);
     readonly effectivePlayer = computed(() => {
-        const player = this.playerOverride() ?? this.settingsStore.player?.() ?? null;
-        return player === VideoPlayer.EmbeddedMpv ? VideoPlayer.VideoJs : player;
+        const player =
+            this.playerOverride() ?? this.settingsStore.player?.() ?? null;
+        return player === VideoPlayer.EmbeddedMpv
+            ? VideoPlayer.VideoJs
+            : player;
     });
 
     readonly layout = signal<MultiviewLayout>(1);
@@ -68,7 +77,6 @@ export class MultiviewPlayerComponent {
     readonly visibleIndexes = computed(() =>
         Array.from({ length: this.layout() }, (_, index) => index)
     );
-    readonly gridClass = computed(() => `multiview-grid--${this.layout()}`);
     private readonly panes = viewChildren<ElementRef<HTMLElement>>('pane');
     private sequence = 0;
 
@@ -99,15 +107,23 @@ export class MultiviewPlayerComponent {
             this.slots();
             const applyMute = () => {
                 this.host.nativeElement
-                    .querySelectorAll<HTMLVideoElement>('[data-multiview-pane] video')
+                    .querySelectorAll<HTMLVideoElement>(
+                        '[data-multiview-pane] video'
+                    )
                     .forEach((video) => {
-                        const pane = video.closest<HTMLElement>('[data-multiview-pane]');
-                        video.muted = Number(pane?.dataset['multiviewPane']) !== active;
+                        const pane = video.closest<HTMLElement>(
+                            '[data-multiview-pane]'
+                        );
+                        video.muted =
+                            Number(pane?.dataset['multiviewPane']) !== active;
                     });
             };
             queueMicrotask(applyMute);
             const observer = new MutationObserver(applyMute);
-            observer.observe(this.host.nativeElement, { childList: true, subtree: true });
+            observer.observe(this.host.nativeElement, {
+                childList: true,
+                subtree: true,
+            });
             cleanup(() => observer.disconnect());
         });
     }

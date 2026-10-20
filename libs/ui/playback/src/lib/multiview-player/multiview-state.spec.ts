@@ -6,27 +6,29 @@ describe('multiview state', () => {
         title: streamUrl,
         isLive: true,
     });
+    type TestSlot = {
+        playback: ReturnType<typeof playback>;
+        sessionKey: string;
+    };
 
     it('starts with four empty panel positions', () => {
         expect(emptyMultiviewSlots()).toEqual([null, null, null, null]);
     });
 
     it('assigns a channel only to the selected panel', () => {
-        const original = emptyMultiviewSlots();
+        const original = emptyMultiviewSlots<TestSlot>();
         const next = assignMultiviewSlot(original, 2, {
             playback: playback('https://example.test/live/2'),
             sessionKey: 'panel-2',
         });
 
         expect(original).toEqual([null, null, null, null]);
-        expect(next[2]?.playback.streamUrl).toBe(
-            'https://example.test/live/2'
-        );
+        expect(next[2]?.playback.streamUrl).toBe('https://example.test/live/2');
         expect(next.filter(Boolean)).toHaveLength(1);
     });
 
     it('replaces the selected panel without disturbing the others', () => {
-        const first = assignMultiviewSlot(emptyMultiviewSlots(), 0, {
+        const first = assignMultiviewSlot(emptyMultiviewSlots<TestSlot>(), 0, {
             playback: playback('https://example.test/live/1'),
             sessionKey: 'panel-0',
         });

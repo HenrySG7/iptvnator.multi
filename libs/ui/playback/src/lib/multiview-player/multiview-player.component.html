@@ -1,4 +1,4 @@
-<div class="multiview-toolbar" role="toolbar" aria-label="MultiView layout">
+<div class="multiview-toolbar" role="toolbar" aria-label="MultiView">
     <span class="multiview-toolbar__label">MultiView</span>
     @for (option of [1, 2, 4]; track option) {
         <button
@@ -6,7 +6,7 @@
             class="multiview-layout-button"
             [class.is-active]="layout() === option"
             [attr.aria-pressed]="layout() === option"
-            [attr.aria-label]="option + ' panel layout'"
+            [attr.aria-label]="'MultiView ' + option"
             (click)="setLayout($any(option))"
         >
             {{ option }}
@@ -14,12 +14,16 @@
     }
 </div>
 
-<div class="multiview-grid" [class]="gridClass()">
+<div
+    class="multiview-grid"
+    [class.multiview-grid--1]="layout() === 1"
+    [class.multiview-grid--2]="layout() === 2"
+    [class.multiview-grid--4]="layout() === 4"
+>
     @for (index of visibleIndexes(); track index) {
         <section
             #pane
             class="multiview-pane"
-            data-multiview-pane
             [attr.data-multiview-pane]="index"
             [class.is-active]="activeIndex() === index"
             [attr.aria-label]="'MultiView panel ' + (index + 1)"
@@ -44,8 +48,12 @@
                     <button
                         type="button"
                         class="multiview-icon-button"
-                        aria-label="Fullscreen panel"
-                        matTooltip="Fullscreen"
+                        [attr.aria-label]="
+                            'EMBEDDED_MPV.PLAYER.ENTER_FULLSCREEN' | translate
+                        "
+                        [matTooltip]="
+                            'EMBEDDED_MPV.PLAYER.ENTER_FULLSCREEN' | translate
+                        "
                         (click)="fullscreen(index, $event)"
                     >
                         <mat-icon>fullscreen</mat-icon>
@@ -53,8 +61,8 @@
                     <button
                         type="button"
                         class="multiview-icon-button"
-                        aria-label="Close panel"
-                        matTooltip="Close"
+                        [attr.aria-label]="'CLOSE' | translate"
+                        [matTooltip]="'CLOSE' | translate"
                         (click)="close(index, $event)"
                     >
                         <mat-icon>close</mat-icon>
@@ -67,7 +75,9 @@
                     (click)="select(index)"
                 >
                     <mat-icon>add</mat-icon>
-                    <span>Select this panel, then choose a channel</span>
+                    <span>{{
+                        'GLOBAL_FAVORITES.EMPTY_PLAYER' | translate
+                    }}</span>
                 </button>
             }
         </section>
