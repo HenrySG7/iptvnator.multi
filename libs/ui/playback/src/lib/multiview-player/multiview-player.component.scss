@@ -1,0 +1,147 @@
+:host {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    flex-direction: column;
+    background: #000;
+}
+
+.multiview-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 4px 10px;
+    color: var(--app-on-surface);
+    background: var(--app-widget-header-bg);
+    border-bottom: 1px solid var(--app-widget-border);
+    app-region: no-drag;
+}
+
+.multiview-toolbar__label {
+    margin-right: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.multiview-layout-button,
+.multiview-icon-button,
+.multiview-pane__empty {
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+}
+
+.multiview-layout-button {
+    min-width: 30px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--app-card-hover-bg);
+}
+
+.multiview-layout-button.is-active {
+    color: var(--app-selection-on-color);
+    background: var(--app-selection-color);
+}
+
+.multiview-grid {
+    display: grid;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    gap: 3px;
+    background: var(--app-widget-border);
+}
+
+.multiview-grid--1 {
+    grid-template-columns: 1fr;
+}
+
+.multiview-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.multiview-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.multiview-pane {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    background: #000;
+}
+
+.multiview-pane.is-active {
+    outline-color: var(--app-selection-color);
+}
+
+.multiview-pane app-web-player-view {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.multiview-pane__actions {
+    position: absolute;
+    z-index: 4;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+}
+
+.multiview-pane:hover .multiview-pane__actions,
+.multiview-pane.is-active .multiview-pane__actions,
+.multiview-pane__actions:focus-within {
+    opacity: 1;
+}
+
+.multiview-icon-button {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: rgb(0 0 0 / 68%);
+}
+
+.multiview-icon-button mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+
+.multiview-pane__empty {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--app-eyebrow-color);
+    background: var(--app-content-bg);
+}
+
+.multiview-pane__empty:focus-visible,
+.multiview-layout-button:focus-visible,
+.multiview-icon-button:focus-visible {
+    outline: 2px solid var(--app-focus-ring);
+    outline-offset: -2px;
+}
+
+@media (max-width: 700px) {
+    .multiview-grid--2 {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+}

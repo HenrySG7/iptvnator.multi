@@ -1,0 +1,85 @@
+<div class="multiview-toolbar" role="toolbar" aria-label="MultiView">
+    <span class="multiview-toolbar__label">MultiView</span>
+    @for (option of [1, 2, 4]; track option) {
+        <button
+            type="button"
+            class="multiview-layout-button"
+            [class.is-active]="layout() === option"
+            [attr.aria-pressed]="layout() === option"
+            [attr.aria-label]="'MultiView ' + option"
+            (click)="setLayout($any(option))"
+        >
+            {{ option }}
+        </button>
+    }
+</div>
+
+<div
+    class="multiview-grid"
+    [class.multiview-grid--1]="layout() === 1"
+    [class.multiview-grid--2]="layout() === 2"
+    [class.multiview-grid--4]="layout() === 4"
+>
+    @for (index of visibleIndexes(); track index) {
+        <section
+            #pane
+            class="multiview-pane"
+            [attr.data-multiview-pane]="index"
+            [class.is-active]="activeIndex() === index"
+            [attr.aria-label]="'MultiView panel ' + (index + 1)"
+            (click)="select(index)"
+        >
+            @if (slots()[index]; as slot) {
+                <app-web-player-view
+                    [playbackSessionKey]="slot.sessionKey"
+                    [streamUrl]="slot.playback.streamUrl"
+                    [title]="slot.playback.title"
+                    [playback]="slot.playback"
+                    [volume]="activeIndex() === index ? volume() : 0"
+                    [playerOverride]="slot.playerOverride"
+                    [timelineSegments]="slot.timelineSegments"
+                    [recordingMetadata]="slot.recordingMetadata"
+                    (externalFallbackRequested)="
+                        externalFallbackRequested.emit($event)
+                    "
+                    (recordingStopped)="recordingStopped.emit($event)"
+                />
+                <div class="multiview-pane__actions">
+                    <button
+                        type="button"
+                        class="multiview-icon-button"
+                        [attr.aria-label]="
+                            'EMBEDDED_MPV.PLAYER.ENTER_FULLSCREEN' | translate
+                        "
+                        [matTooltip]="
+                            'EMBEDDED_MPV.PLAYER.ENTER_FULLSCREEN' | translate
+                        "
+                        (click)="fullscreen(index, $event)"
+                    >
+                        <mat-icon>fullscreen</mat-icon>
+                    </button>
+                    <button
+                        type="button"
+                        class="multiview-icon-button"
+                        [attr.aria-label]="'CLOSE' | translate"
+                        [matTooltip]="'CLOSE' | translate"
+                        (click)="close(index, $event)"
+                    >
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            } @else {
+                <button
+                    type="button"
+                    class="multiview-pane__empty"
+                    (click)="select(index)"
+                >
+                    <mat-icon>add</mat-icon>
+                    <span>{{
+                        'GLOBAL_FAVORITES.EMPTY_PLAYER' | translate
+                    }}</span>
+                </button>
+            }
+        </section>
+    }
+</div>

@@ -78,7 +78,7 @@ import {
     type FullscreenChannelPanelContext,
     type FullscreenChannelPanelHost,
     type PlaybackFallbackRequest,
-    WebPlayerViewComponent,
+    MultiviewPlayerComponent,
 } from '@iptvnator/ui/playback';
 import { LiveEpgPanelSummary } from '@iptvnator/ui/shared-portals';
 import {
@@ -148,7 +148,7 @@ const LIVE_CHANNEL_SORT_STORAGE_KEY = 'xtream-live-channel-sort-mode';
         PortalEmptyStateComponent,
         ResizableDirective,
         TranslatePipe,
-        WebPlayerViewComponent,
+        MultiviewPlayerComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -108,7 +108,7 @@ import {
     type FullscreenChannelPanelHost,
     type PlaybackFallbackRequest,
     SidebarComponent,
-    WebPlayerViewComponent,
+    MultiviewPlayerComponent,
 } from '@iptvnator/ui/playback';
 import { LiveEpgPanelSummary } from '@iptvnator/ui/shared-portals';
 import { createPlaybackSessionKey } from '@iptvnator/playback/util';
@@ -217,7 +217,7 @@ function isInsideScrollableRegion(
         ResizableDirective,
         SidebarComponent,
         TranslatePipe,
-        WebPlayerViewComponent,
+        MultiviewPlayerComponent,
     ],
     providers: [
         // The fullscreen channel panel inside the player renders this page's

@@ -154,12 +154,10 @@
                             handleRadioChannelSwitch($event)
                         "
                     />
-                } @else {
-                    <app-web-player-view
+                } @else if (activePlayback(); as playback) {
+                    <app-multiview-player
                         [playbackSessionKey]="playbackSessionKey()"
-                        [streamUrl]="streamUrl()"
-                        [title]="activePlayback()?.title ?? ''"
-                        [playback]="activePlayback()"
+                        [playback]="playback"
                         [recordingMetadata]="recordingMetadata()"
                         (externalFallbackRequested)="
                             handleExternalFallbackRequest($event)

@@ -77,7 +77,7 @@ import {
     type FullscreenChannelPanelContext,
     type FullscreenChannelPanelHost,
     type PlaybackFallbackRequest,
-    WebPlayerViewComponent,
+    MultiviewPlayerComponent,
 } from '@iptvnator/ui/playback';
 import { LiveEpgPanelSummary } from '@iptvnator/ui/shared-portals';
 import { EpgRuntimeBridgeService } from '@iptvnator/epg/data-access';
@@ -173,7 +173,7 @@ import { StalkerWorkspaceRouteSession } from '../stalker-workspace-route-session
         ResizableDirective,
         StalkerItvAllItemsComponent,
         TranslatePipe,
-        WebPlayerViewComponent,
+        MultiviewPlayerComponent,
     ],
     providers: [
         // The fullscreen channel panel inside the player renders this
