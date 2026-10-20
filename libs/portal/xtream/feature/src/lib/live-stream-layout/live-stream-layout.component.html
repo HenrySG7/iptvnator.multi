@@ -160,20 +160,20 @@
     }
     @if (streamUrl) {
         @if (isEmbeddedPlayer) {
-            <div class="video-player">
-                <app-web-player-view
-                    [playbackSessionKey]="playbackSessionKey()"
-                    [streamUrl]="streamUrl"
-                    [title]="activePlayback()?.title ?? ''"
-                    [playback]="activePlayback()"
-                    [timelineSegments]="catchupTimelineSegments()"
-                    [recordingMetadata]="recordingMetadata()"
-                    (externalFallbackRequested)="
-                        handleExternalFallbackRequest($event)
-                    "
-                    (recordingStopped)="onRecordingStopped($event)"
-                />
-            </div>
+            @if (activePlayback(); as playback) {
+                <div class="video-player">
+                    <app-multiview-player
+                        [playbackSessionKey]="playbackSessionKey()"
+                        [playback]="playback"
+                        [timelineSegments]="catchupTimelineSegments()"
+                        [recordingMetadata]="recordingMetadata()"
+                        (externalFallbackRequested)="
+                            handleExternalFallbackRequest($event)
+                        "
+                        (recordingStopped)="onRecordingStopped($event)"
+                    />
+                </div>
+            }
         }
         @if (supportsEpg) {
             <div

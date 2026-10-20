@@ -115,24 +115,24 @@
                             (volumeChange)="onInlineVolumeChange($event)"
                         />
                     } @else {
-                        <app-web-player-view
-                            [playbackSessionKey]="playbackSessionKey()"
-                            [streamUrl]="embeddedPlayback()?.streamUrl ?? ''"
-                            [title]="inlinePlayerTitle()"
-                            [playback]="embeddedPlayback()"
-                            [playerOverride]="
-                                activeChannelIsDash()
-                                    ? dashPlayerOverride()
-                                    : (playerSettings().player ?? null)
-                            "
-                            [volume]="volume()"
-                            [timelineSegments]="catchupTimelineSegments()"
-                            [recordingMetadata]="recordingMetadata()"
-                            (externalFallbackRequested)="
-                                handleExternalFallbackRequest($event)
-                            "
-                            (recordingStopped)="onRecordingStopped($event)"
-                        />
+                        @if (embeddedPlayback(); as playback) {
+                            <app-multiview-player
+                                [playbackSessionKey]="playbackSessionKey()"
+                                [playback]="playback"
+                                [playerOverride]="
+                                    activeChannelIsDash()
+                                        ? dashPlayerOverride()
+                                        : (playerSettings().player ?? null)
+                                "
+                                [volume]="volume()"
+                                [timelineSegments]="catchupTimelineSegments()"
+                                [recordingMetadata]="recordingMetadata()"
+                                (externalFallbackRequested)="
+                                    handleExternalFallbackRequest($event)
+                                "
+                                (recordingStopped)="onRecordingStopped($event)"
+                            />
+                        }
                     }
                     @if (guideOpen()) {
                         <app-epg-guide-now-playing

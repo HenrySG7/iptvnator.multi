@@ -1,6 +1,6 @@
 {
-    "appId": "com.fourgray.iptvnator",
-    "productName": "IPTVnator",
+    "appId": "io.github.henrysg7.streamgrid",
+    "productName": "StreamGrid",
     "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
     "fileAssociations": [
         {
@@ -21,8 +21,8 @@
     "publish": [
         {
             "provider": "github",
-            "owner": "4gray",
-            "repo": "iptvnator"
+            "owner": "HenrySG7",
+            "repo": "iptvnator.multi"
         }
     ],
     "directories": {
@@ -52,9 +52,9 @@
         "**/embedded-mpv-runtime.json"
     ],
     "extraMetadata": {
-        "name": "iptvnator",
-        "productName": "IPTVnator",
-        "desktopName": "iptvnator",
+        "name": "streamgrid",
+        "productName": "StreamGrid",
+        "desktopName": "streamgrid",
         "main": "electron-backend/main.js"
     },
     "extraResources": ["dist/apps/electron-backend/workers"],
@@ -189,7 +189,7 @@
             }
         ],
         "artifactName": "${name}-${version}-windows-${arch}-setup.${ext}",
-        "icon": "apps/web/src/assets/icons/icon.png"
+        "icon": "apps/web/src/assets/icons/streamgrid.png"
     },
     "nsis": {
         "artifactName": "${name}-${version}-windows-${arch}-setup.${ext}"
